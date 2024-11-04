@@ -1,6 +1,7 @@
 import { AuthException, UnknownException } from "@/src/core/errors/exceptions";
 import { ResponseMessage } from "@/src/features/authentication/data/models/responseMessage";
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import { Platform } from "react-native";
 import { CompletedComment } from "../models/completedComment";
 import { CompletedPost } from "../models/completedPost";
 import { PostTemplate } from "../models/postTemplate";
@@ -9,7 +10,8 @@ import PostDatasource from "./postDatasource";
 class PostDatasourceImplementation implements PostDatasource {
   url: string;
   constructor(private httpClient: AxiosInstance) {
-    this.url = "http://localhost:3001/api";
+    const address = Platform.OS === "ios" ? "localhost" : "10.0.2.2";
+    this.url = `http://${address}:3001/api`;
   }
   getPosts: () => Promise<CompletedPost[]> = async () => {
     const endpoint = this.url + "/posts";
