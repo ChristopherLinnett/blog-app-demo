@@ -1,8 +1,10 @@
 import {
   AuthException,
   CacheException,
+  DataFormatException,
   FileSystemException,
   ServerException,
+  UnknownException,
 } from "./exceptions";
 
 export abstract class Failure {
@@ -74,8 +76,11 @@ export class UnknownFailure extends Failure {
     super(message, statusCode);
   }
 
-  static fromException(exception: Error): FileSystemFailure {
-    return new DataFormatFailure(exception.message, 500);
+  static fromException(exception: Error | UnknownException): FileSystemFailure {
+    return new UnknownFailure(
+      exception.message ?? "An unknown error has occurred",
+      500
+    );
   }
 }
 
@@ -84,7 +89,7 @@ export class DataFormatFailure extends Failure {
     super(message, statusCode);
   }
 
-  static fromException(exception: DataFormatFailure): FileSystemFailure {
+  static fromException(exception: DataFormatException): FileSystemFailure {
     return new DataFormatFailure(exception.message, exception.statusCode);
   }
 }

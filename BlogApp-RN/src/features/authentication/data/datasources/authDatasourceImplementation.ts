@@ -1,12 +1,13 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import { Platform } from "react-native";
 import {
   AuthException,
+  ServerException,
   UnknownException,
 } from "../../../../core/errors/exceptions";
 import { AuthResponse } from "../models/authResponse";
 import { ResponseMessage } from "../models/responseMessage";
 import AuthDatasource from "./authDatasource";
-import { Platform } from "react-native";
 
 class AuthDatasourceImplementation implements AuthDatasource {
   url: string;
@@ -28,6 +29,9 @@ class AuthDatasourceImplementation implements AuthDatasource {
       return authResponse;
     } catch (exception) {
       if (exception instanceof AxiosError) {
+        if (exception.code === "ERR_NETWORK") {
+          throw new ServerException("Could not connect to the server", 503);
+        }
         throw new AuthException(
           exception.response?.data["message"] as string,
           exception.code
@@ -47,6 +51,9 @@ class AuthDatasourceImplementation implements AuthDatasource {
         return response.data;
       } catch (exception) {
         if (exception instanceof AxiosError) {
+          if (exception.code === "ERR_NETWORK") {
+            throw new ServerException("Could not connect to the server", 503);
+          }
           throw new AuthException(
             exception.response?.data["message"] as string,
             exception.code

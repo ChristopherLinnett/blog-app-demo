@@ -1,4 +1,3 @@
-// src/navigation/AppNavigator.js
 import AuthPage from "@/src/features/authentication/presentation/pages/AuthPage";
 import { AuthStateConsumer } from "@/src/features/authentication/presentation/state/AuthStateConsumer";
 import PostDetailsPage from "@/src/features/posts/presentation/pages/PostDetailPage";

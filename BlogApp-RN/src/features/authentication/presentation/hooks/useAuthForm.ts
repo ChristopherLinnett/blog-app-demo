@@ -12,6 +12,10 @@ export const useAuthForm = () => {
     setEmail(value);
   };
 
+  const updateError = (error: string | undefined) => {
+    setErrorMessage(error ?? "");
+  };
+
   const updatePassword = (value: string) => {
     if (errorMessage.length > 0) {
       setErrorMessage("");
@@ -22,6 +26,6 @@ export const useAuthForm = () => {
   return [
     { get: email, set: updateEmail },
     { get: password, set: updatePassword },
-    { get: errorMessage, set: setErrorMessage },
+    { get: errorMessage, set: updateError },
   ];
 };
