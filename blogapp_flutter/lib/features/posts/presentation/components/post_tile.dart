@@ -135,7 +135,11 @@ class _PostTileState extends State<PostTile> {
                     Text(
                       'By: ${widget.post.author}',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: widget.post.ready ? null : Colors.grey),
+                          color: editing
+                              ? Colors.transparent
+                              : widget.post.ready
+                                  ? null
+                                  : Colors.grey),
                     ),
                     const SizedBox(height: 5),
                     editing

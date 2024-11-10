@@ -35,7 +35,8 @@ class _PostListPageState extends State<PostListPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: ListView.builder(
+                    child: posts.isNotEmpty
+                        ? ListView.builder(
                       padding: const EdgeInsets.only(bottom: 16),
                       itemCount: posts.length,
                       itemBuilder: (context, index) {
@@ -44,7 +45,11 @@ class _PostListPageState extends State<PostListPage> {
                           post: post,
                         );
                       },
-                    ),
+                          )
+                        : const Center(
+                            child: Text(
+                                'No Posts Yet, click below to be the first'),
+                          ),
                   ),
                   const SizedBox(height: 16),
                   MutationListener(
@@ -63,7 +68,7 @@ class _PostListPageState extends State<PostListPage> {
                         'Add Post',
                         style: Theme.of(context)
                             .textTheme
-                            .bodyLarge
+                            .titleMedium
                             ?.copyWith(color: Colors.white),
                       ),
                     ),
@@ -74,7 +79,7 @@ class _PostListPageState extends State<PostListPage> {
             );
           }
           if (query.status == QueryStatus.loading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator.adaptive());
           } else {
             return Center(
               child: Column(
