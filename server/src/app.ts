@@ -16,7 +16,7 @@ function delayResponse(ms: number) {
     setTimeout(() => next(), ms);
   };
 }
-app.use(delayResponse(5000));
+app.use(delayResponse(2000));
 app.use("/api/auth", authRoutes);
 app.use(checkToken);
 
